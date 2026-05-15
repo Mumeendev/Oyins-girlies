@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmetics Collection | Oyin's Girlies</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="products-page">
+    <nav class="navbar">
+        <div class="logo">OYIN'S <span>GIRLIES</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+        </ul>
+    </nav>
+
+    <main class="products-main">
+        <header class="products-header reveal">
+            <h1>Cosmetics <span>Essentials</span></h1>
+            <p>Define your beauty with our premium range</p>
+            
+            <div class="search-container">
+                <input type="text" id="productSearch" placeholder="Search for lipgloss, eyeliner..." onkeyup="searchProducts()">
+                <span class="search-icon">🔍</span>
+            </div>
+        </header>
+
+        <section class="products-grid" id="cosmeticsGrid">
+            <!-- Existing Items -->
+            <div class="product-card" data-name="Lipgloss Glossy Pink High Shine">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1635263282145-253319c75fd4?q=80&w=385&auto=format&fit=crop" alt="Lipgloss">
+                </div>
+                <div class="product-info">
+                    <h3>High Shine Lipgloss</h3>
+                    <p class="price">$15.00</p>
+                    <a href="order.html?product=Lipgloss" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-name="Eyeliner Waterproof Black Matte">
+                <div class="product-image">
+                    <img src="https://media.istockphoto.com/id/1014252932/photo/mascara-isolated-on-white-background.webp?a=1&b=1&s=612x612&w=0&k=20&c=g4XABPowxZVDdql76EUuuf2LLcQeztS1fEh4WIxxswY=" alt="Eyeliner">
+                </div>
+                <div class="product-info">
+                    <h3>Waterproof Eyeliner</h3>
+                    <p class="price">$12.00</p>
+                    <a href="order.html?product=Eyeliner" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-name="Mascara Volume Extra Bold">
+                <div class="product-image">
+                    <img src="https://media.istockphoto.com/id/1221178212/photo/eyelash-extension-procedure-close-up-beautiful-woman-with-long-eyelashes-in-a-beauty-salon.webp?a=1&b=1&s=612x612&w=0&k=20&c=huKLGJMFguIBRmk2zWpWQyUMaovEgVMPcjKXk4qdkeI=" alt="Mascara">
+                </div>
+                <div class="product-info">
+                    <h3>Volume Mascara</h3>
+                    <p class="price">$18.00</p>
+                    <a href="order.html?product=Mascara" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <!-- New Requested Items -->
+            <div class="product-card" data-name="Eyeshadow Palette Vibrant Colors">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&q=80&w=600" alt="Eyeshadow Palette">
+                </div>
+                <div class="product-info">
+                    <h3>Vibrant Eyeshadow Palette</h3>
+                    <p class="price">$25.00</p>
+                    <a href="order.html?product=Eyeshadow+Palette" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-name="Eyebrow Pencil Gel Definition">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1631214499520-7a182641155d?auto=format&fit=crop&q=80&w=600" alt="Eyebrow Pencil">
+                </div>
+                <div class="product-info">
+                    <h3>Eyebrow Pencil / Gel</h3>
+                    <p class="price">$14.00</p>
+                    <a href="order.html?product=Eyebrow+Pencil" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-name="Eye lash Luxury Mink Silk">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1583241475880-083f84372725?auto=format&fit=crop&q=80&w=600" alt="Eye lashes">
+                </div>
+                <div class="product-info">
+                    <h3>Luxury Eye Lashes</h3>
+                    <p class="price">$10.00</p>
+                    <a href="order.html?product=Eye+Lash" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-name="Nails Professional Gel Polish Art">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&q=80&w=600" alt="Nails">
+                </div>
+                <div class="product-info">
+                    <h3>Professional Nail Set</h3>
+                    <p class="price">$20.00</p>
+                    <a href="order.html?product=Nails" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-name="Lipstick Matte Velvet Creamy">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&q=80&w=600" alt="Lipstick">
+                </div>
+                <div class="product-info">
+                    <h3>Velvet Matte Lipstick</h3>
+                    <p class="price">$18.00</p>
+                    <a href="order.html?product=Lipstick" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-name="Lip Liner Precision Contour">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1590439471364-192aa70c0b53?auto=format&fit=crop&q=80&w=600" alt="Lip Liner">
+                </div>
+                <div class="product-info">
+                    <h3>Precision Lip Liner</h3>
+                    <p class="price">$12.00</p>
+                    <a href="order.html?product=Lip+Liner" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-name="Lip Balm Hydrating Nourishing">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1621333100222-7798365611f7?auto=format&fit=crop&q=80&w=600" alt="Lip Balm">
+                </div>
+                <div class="product-info">
+                    <h3>Hydrating Lip Balm</h3>
+                    <p class="price">$8.00</p>
+                    <a href="order.html?product=Lip+Balm" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-name="Blush Rose Petal Soft Matte">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1596704017254-9b121068fb31?auto=format&fit=crop&q=80&w=600" alt="Blush">
+                </div>
+                <div class="product-info">
+                    <h3>Petal Soft Blush</h3>
+                    <p class="price">$20.00</p>
+                    <a href="order.html?product=Blush" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-name="Foundation Seamless Skin Liquid">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1617345237722-1d596486049f?auto=format&fit=crop&q=80&w=600" alt="Foundation">
+                </div>
+                <div class="product-info">
+                    <h3>Seamless Foundation</h3>
+                    <p class="price">$35.00</p>
+                    <a href="order.html?product=Foundation" class="btn-add">Order Now</a>
+                </div>
+            </div>
+        </section>
+        
+        <div class="background-blob"></div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

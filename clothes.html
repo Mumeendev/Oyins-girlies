@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique Clothes | Oyin's Girlies</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="products-page">
+    <nav class="navbar">
+        <div class="logo">OYIN'S <span>GIRLIES</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+        </ul>
+    </nav>
+
+    <main class="products-main">
+        <header class="products-header reveal">
+            <h1>Trendy <span>Clothes</span></h1>
+            <p>Fashion forward pieces for every occasion</p>
+            
+            <div class="search-container">
+                <input type="text" id="productSearch" placeholder="Search for dresses, tops, sets..." onkeyup="searchProducts()">
+                <span class="search-icon">🔍</span>
+            </div>
+        </header>
+
+        <section class="products-grid reveal">
+            <div class="product-card" data-name="Dress Silk Summer Floral">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=600" alt="Dress">
+                </div>
+                <div class="product-info">
+                    <h3>Summer Silk Dress</h3>
+                    <p class="price">$75.00</p>
+                    <a href="order.html?product=Silk+Dress" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-name="Top Linen Elegant White">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1564252234532-68b8b9358750?auto=format&fit=crop&q=80&w=600" alt="Top">
+                </div>
+                <div class="product-info">
+                    <h3>Elegant Linen Top</h3>
+                    <p class="price">$45.00</p>
+                    <a href="order.html?product=Linen+Top" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-name="Co-ord Set Matching Knit">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=600" alt="Set">
+                </div>
+                <div class="product-info">
+                    <h3>Knit Co-ord Set</h3>
+                    <p class="price">$95.00</p>
+                    <a href="order.html?product=Knit+Set" class="btn-add">Order Now</a>
+                </div>
+            </div>
+        </section>
+        
+        <div class="background-blob"></div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

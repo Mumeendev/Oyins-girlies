@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Order | Oyin's Girlies</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="order-page">
+    <nav class="navbar">
+        <div class="logo">OYIN'S <span>GIRLIES</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="cosmetics.html">Cosmetics</a></li>
+        </ul>
+    </nav>
+
+    <main class="order-main">
+        <div class="order-container reveal">
+            <div class="order-header">
+                <h1>Secure <span>Checkout</span></h1>
+                <p id="selectedProductTitle">Ordering: Premium Cosmetic Item</p>
+            </div>
+
+            <form id="orderForm" class="order-form">
+                <!-- Location -->
+                <div class="form-group">
+                    <label for="location">Delivery Location</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">📍</span>
+                        <input type="text" id="location" placeholder="Enter your full address" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <!-- Colour Selection -->
+                    <div class="form-group">
+                        <label for="colour">Select Colour/Shade</label>
+                        <select id="colour" required>
+                            <option value="" disabled selected>Choose a shade</option>
+                            <option value="Classic Pink">Classic Pink</option>
+                            <option value="Deep Purple">Deep Purple</option>
+                            <option value="Midnight Black">Midnight Black</option>
+                            <option value="Nude Beige">Nude Beige</option>
+                            <option value="Ruby Red">Ruby Red</option>
+                        </select>
+                    </div>
+
+                    <!-- Amount/Quantity -->
+                    <div class="form-group">
+                        <label for="amount">Quantity (Amount)</label>
+                        <input type="number" id="amount" min="1" value="1" required>
+                    </div>
+                </div>
+
+                <!-- Date of Deliverance -->
+                <div class="form-group">
+                    <label for="deliveryDate">Preferred Date of Deliverance</label>
+                    <input type="date" id="deliveryDate" required>
+                </div>
+
+                <button type="submit" class="btn-confirm-order">Confirm Order</button>
+            </form>
+        </div>
+        <div class="background-blob"></div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

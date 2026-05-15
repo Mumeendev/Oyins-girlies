@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair Care Collection | Oyin's Girlies</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="products-page">
+    <nav class="navbar">
+        <div class="logo">OYIN'S <span>GIRLIES</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+        </ul>
+    </nav>
+
+    <main class="products-main">
+        <header class="products-header reveal">
+            <h1>Lustrous <span>Hair Care</span></h1>
+            <p>Treat your hair to the luxury it deserves</p>
+            
+            <div class="search-container">
+                <input type="text" id="productSearch" placeholder="Search for shampoo, conditioner, oils..." onkeyup="searchProducts()">
+                <span class="search-icon">🔍</span>
+            </div>
+        </header>
+
+        <section class="products-grid reveal">
+            <div class="product-card" data-name="Shampoo Repair Hydrating">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&q=80&w=600" alt="Shampoo">
+                </div>
+                <div class="product-info">
+                    <h3>Repairing Shampoo</h3>
+                    <p class="price">$24.00</p>
+                    <a href="order.html?product=Shampoo" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-name="Conditioner Deep Nourishing">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1527799822367-a2886701f6cd?auto=format&fit=crop&q=80&w=600" alt="Conditioner">
+                </div>
+                <div class="product-info">
+                    <h3>Deep Conditioner</h3>
+                    <p class="price">$26.00</p>
+                    <a href="order.html?product=Conditioner" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-name="Hair Oil Organic Argan Shine">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?auto=format&fit=crop&q=80&w=600" alt="Hair Oil">
+                </div>
+                <div class="product-info">
+                    <h3>Argan Shine Oil</h3>
+                    <p class="price">$32.00</p>
+                    <a href="order.html?product=Hair+Oil" class="btn-add">Order Now</a>
+                </div>
+            </div>
+        </section>
+        
+        <div class="background-blob"></div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

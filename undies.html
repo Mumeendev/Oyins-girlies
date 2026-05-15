@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Undies | Oyin's Girlies</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="products-page">
+    <nav class="navbar">
+        <div class="logo">OYIN'S <span>GIRLIES</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+        </ul>
+    </nav>
+
+    <main class="products-main">
+        <header class="products-header reveal">
+            <h1>Essential <span>Undies</span></h1>
+            <p>Comfort and elegance combined</p>
+            
+            <div class="search-container">
+                <input type="text" id="productSearch" placeholder="Search for lace, silk, cotton..." onkeyup="searchProducts()">
+                <span class="search-icon">🔍</span>
+            </div>
+        </header>
+
+        <section class="products-grid reveal">
+            <div class="product-card" data-name="Lace Set Delicate Pink">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1582142306909-195724d33ffc?auto=format&fit=crop&q=80&w=600" alt="Lace Set">
+                </div>
+                <div class="product-info">
+                    <h3>Delicate Lace Set</h3>
+                    <p class="price">$40.00</p>
+                    <a href="order.html?product=Lace+Set" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-name="Silk Robe Midnight Black">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&q=80&w=600" alt="Robe">
+                </div>
+                <div class="product-info">
+                    <h3>Midnight Silk Robe</h3>
+                    <p class="price">$60.00</p>
+                    <a href="order.html?product=Silk+Robe" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-name="Cotton Briefs Daily Comfort">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1574634534894-89d7576c8259?auto=format&fit=crop&q=80&w=600" alt="Briefs">
+                </div>
+                <div class="product-info">
+                    <h3>Daily Comfort Briefs</h3>
+                    <p class="price">$20.00</p>
+                    <a href="order.html?product=Cotton+Briefs" class="btn-add">Order Now</a>
+                </div>
+            </div>
+        </section>
+        
+        <div class="background-blob"></div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

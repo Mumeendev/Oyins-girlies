@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skincare Collection | Oyin's Girlies</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="products-page">
+    <nav class="navbar">
+        <div class="logo">OYIN'S <span>GIRLIES</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+        </ul>
+    </nav>
+
+    <main class="products-main">
+        <header class="products-header reveal">
+            <h1>Luxury <span>Skincare</span></h1>
+            <p>Reveal your natural glow with our premium essentials</p>
+            
+            <div class="search-container">
+                <input type="text" id="productSearch" placeholder="Search for cleanser, serum, moisturizer..." onkeyup="searchProducts()">
+                <span class="search-icon">🔍</span>
+            </div>
+        </header>
+
+        <section class="products-grid" id="skincareGrid">
+            <!-- Skincare Product 1 -->
+            <div class="product-card" data-name="Hydrating Cleanser Gentle Foam">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=600" alt="Cleanser">
+                </div>
+                <div class="product-info">
+                    <h3>Gentle Hydrating Cleanser</h3>
+                    <p class="price">$22.00</p>
+                    <a href="order.html?product=Cleanser" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <!-- Skincare Product 2 -->
+            <div class="product-card" data-name="Vitamin C Serum Brightening Glow">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1620916566398-39f1143f2c47?auto=format&fit=crop&q=80&w=600" alt="Serum">
+                </div>
+                <div class="product-info">
+                    <h3>Vitamin C Glow Serum</h3>
+                    <p class="price">$38.00</p>
+                    <a href="order.html?product=Serum" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <!-- Skincare Product 3 -->
+            <div class="product-card" data-name="Moisturizer Daily Repair Cream">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=600" alt="Moisturizer">
+                </div>
+                <div class="product-info">
+                    <h3>Daily Repair Moisturizer</h3>
+                    <p class="price">$30.00</p>
+                    <a href="order.html?product=Moisturizer" class="btn-add">Order Now</a>
+                </div>
+            </div>
+
+            <!-- Skincare Product 4 -->
+            <div class="product-card" data-name="Sunscreen SPF 50 Invisible Shield">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=600" alt="Sunscreen">
+                </div>
+                <div class="product-info">
+                    <h3>Invisible Shield Sunscreen</h3>
+                    <p class="price">$25.00</p>
+                    <a href="order.html?product=Sunscreen" class="btn-add">Order Now</a>
+                </div>
+            </div>
+        </section>
+        
+        <div class="background-blob"></div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
