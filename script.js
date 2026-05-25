@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    alert('Error saving order. Please make sure the server is running.');
+                    alert(`Error: ${error.message}\n\nPlease make sure your backend server is running on port 1000.\n(Run 'node server.js' in your terminal)`);
                     submitBtn.innerText = 'Confirm Order';
                     submitBtn.disabled = false;
                 }

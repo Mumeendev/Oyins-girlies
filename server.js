@@ -3,6 +3,7 @@ const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 1000;
@@ -36,6 +37,9 @@ app.use(cors({
   allowedHeaders: ['Content-Type']
 }));
 app.use(express.json());
+
+// Serve Static Files (Frontend)
+app.use(express.static(path.join(__dirname, '.')));
 
 // Database Connection
 const pool = new Pool({
@@ -85,7 +89,7 @@ const sendOrderEmail = async (order) => {
         <p><strong>Colour/Shade:</strong> ${order.colour}</p>
         <p><strong>Quantity:</strong> ${order.amount}</p>
         <p><strong>Delivery Location:</strong> ${order.location}</p>
-        <p><strong>Preferred Delivery Date:</strong> ${order.delivery_date.toLocaleDateString()}</p>
+        <p><strong>Preferred Delivery Date:</strong> ${new Date(order.delivery_date).toLocaleDateString()}</p>
         <hr>
         <p style="font-size: 0.8rem; color: #666;">This is an automated notification from your website.</p>
       </div>
@@ -101,10 +105,6 @@ const sendOrderEmail = async (order) => {
 };
 
 // Routes
-app.get('/', (req, res) => {
-  res.send('Oyin\'s Girlies Backend is running!');
-});
-
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Server is healthy' });
 });
@@ -131,6 +131,16 @@ app.post('/api/orders', async (req, res) => {
     console.error('Error saving order:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
+});
+
+// Catch-all middleware to serve index.html for any unhandled frontend routes
+app.use((req, res) => {
+  // If the request is for an API that doesn't exist, return 404
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ error: 'API route not found' });
+  }
+  // Otherwise, serve index.html for frontend routing
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.listen(port, () => {

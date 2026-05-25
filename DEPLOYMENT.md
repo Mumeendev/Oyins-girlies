@@ -17,7 +17,7 @@ GitHub Pages cannot run your `server.js`. You need a backend host (like **Render
 ## 🌐 Part 2: Update the Frontend
 1.  Open `script.js`.
 2.  Find the `fetch` call (around line 75).
-3.  Replace `http://localhost:3000/api/orders` with your **Render URL** + `/api/orders`.
+3.  Replace `http://localhost:1000/api/orders` with your **Render URL** + `/api/orders`.
 4.  Commit and push your changes to GitHub.
 
 ## 📦 Part 3: Deploy to GitHub Pages
