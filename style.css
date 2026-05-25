@@ -81,7 +81,7 @@ h1, h2, .logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: url('hero-image.jpg') center/cover no-repeat;
+    background: #1a1a1a url('hero-image.jpg') center/cover no-repeat; /* Fallback color */
     overflow: hidden;
 }
 

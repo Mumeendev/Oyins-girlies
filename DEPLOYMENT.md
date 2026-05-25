@@ -44,7 +44,13 @@ To receive order notifications at the specified emails:
 3.  **Update Environment Variables (on Render):**
     *   `EMAIL_USER`: Your Gmail address.
     *   `EMAIL_PASS`: The 16-character App Password (no spaces).
-    *   `NOTIFY_EMAILS`: `folakemiomokafe242@gmail.com, abdulmumeenapata72@gmail.com`
+    *   `NOTIFY_EMAILS`: (Optional) Defaults to `folakemiomokafe242@gmail.com, abdulmumeenapata72@gmail.com`. You can override this by providing your own comma-separated list.
+
+## 🔒 Security Features
+The backend now includes:
+- **Helmet:** Protects the app from various web vulnerabilities by setting appropriate HTTP headers.
+- **Rate Limiting:** Prevents abuse by limiting the number of requests from a single IP address (100 requests per 15 minutes).
+- **SSL Support:** Pre-configured for secure connections to databases like Neon.
 
 ---
 **Happy Selling!** 💄✨

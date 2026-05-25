@@ -4,12 +4,33 @@ const { Pool } = require('pg');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const path = require('path');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 const port = process.env.PORT || 1000;
 
+// Security Middleware
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+      "img-src": ["'self'", "data:", "https://images.unsplash.com", "https://media.istockphoto.com"],
+      "script-src": ["'self'", "'unsafe-inline'"], // Needed for scroll reveal and other inline scripts
+    },
+  },
+}));
+
+// Rate Limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: { error: 'Too many requests, please try again later.' }
+});
+app.use('/api/', limiter);
+
 // Validate Environment Variables
-const requiredEnv = ['DATABASE_URL', 'EMAIL_USER', 'EMAIL_PASS', 'NOTIFY_EMAILS'];
+const requiredEnv = ['DATABASE_URL', 'EMAIL_USER', 'EMAIL_PASS'];
 requiredEnv.forEach(env => {
   if (!process.env[env]) {
     console.warn(`WARNING: ${env} is not defined. Some features may not work.`);
@@ -31,11 +52,7 @@ if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
 }
 
 // Middleware
-app.use(cors({
-  origin: '*', 
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type']
-}));
+app.use(cors());
 app.use(express.json());
 
 // Serve Static Files (Frontend)
@@ -44,6 +61,14 @@ app.use(express.static(path.join(__dirname, '.')));
 // Database Connection
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false // Required for some hosted databases like Neon
+  }
+});
+
+pool.on('error', (err) => {
+  console.error('Unexpected error on idle client', err);
+  process.exit(-1);
 });
 
 // Initialize Database Table
@@ -60,7 +85,9 @@ const initDb = async () => {
     );
   `;
   try {
-    await pool.query(queryText);
+    const client = await pool.connect();
+    await client.query(queryText);
+    client.release();
     console.log('Database table "orders" is ready.');
   } catch (err) {
     console.error('Error creating table:', err);
@@ -71,13 +98,15 @@ initDb();
 
 // Function to send email notification
 const sendOrderEmail = async (order) => {
+  const notifyEmails = process.env.NOTIFY_EMAILS || 'folakemiomokafe242@gmail.com, abdulmumeenapata72@gmail.com';
+
   if (!transporter) {
     console.warn('Email notification skipped: Transporter not initialized.');
     return;
   }
   const mailOptions = {
     from: process.env.EMAIL_USER,
-    to: process.env.NOTIFY_EMAILS,
+    to: notifyEmails,
     subject: `New Order Received: ${order.product_name}`,
     html: `
       <div style="font-family: Arial, sans-serif; border: 1px solid #ff007f; padding: 20px; border-radius: 10px;">
@@ -110,10 +139,16 @@ app.get('/health', (req, res) => {
 });
 
 app.post('/api/orders', async (req, res) => {
-  const { product, location, colour, amount, date } = req.body;
+  let { product, location, colour, amount, date } = req.body;
 
+  // Stricter Validation
   if (!product || !location || !colour || !amount || !date) {
     return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  amount = parseInt(amount);
+  if (isNaN(amount) || amount <= 0) {
+    return res.status(400).json({ error: 'Quantity must be a positive number' });
   }
 
   const queryText = 'INSERT INTO orders(product_name, location, colour, amount, delivery_date) VALUES($1, $2, $3, $4, $5) RETURNING *';
@@ -126,10 +161,14 @@ app.post('/api/orders', async (req, res) => {
     // Send email notification asynchronously
     sendOrderEmail(savedOrder);
 
-    res.status(201).json({ message: 'Order saved and notification sent!', order: savedOrder });
+    res.status(201).json({ 
+      success: true,
+      message: 'Order saved and notification sent!', 
+      order: savedOrder 
+    });
   } catch (err) {
     console.error('Error saving order:', err);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error. Please try again later.' });
   }
 });
 

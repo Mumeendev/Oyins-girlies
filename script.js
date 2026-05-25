@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Handle Order Page Logic
     if (window.location.pathname.includes('order.html')) {
         const urlParams = new URLSearchParams(window.location.search);
-        const product = urlParams.get('product') || 'Premium Item';
+        const product = urlParams.get('product') || 'Selected Item';
         const titleElement = document.getElementById('selectedProductTitle');
         
         if (titleElement) {
@@ -65,25 +65,32 @@ document.addEventListener("DOMContentLoaded", () => {
         if (orderForm) {
             orderForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const location = document.getElementById('location').value;
+                const location = document.getElementById('location').value.trim();
                 const colour = document.getElementById('colour').value;
                 const amount = document.getElementById('amount').value;
                 const date = document.getElementById('deliveryDate').value;
 
+                if (!location || !colour || !amount || !date) {
+                    alert('Please fill in all fields correctly.');
+                    return;
+                }
+
                 const submitBtn = orderForm.querySelector('.btn-confirm-order');
+                const originalBtnText = submitBtn.innerText;
                 submitBtn.innerText = 'Processing...';
                 submitBtn.disabled = true;
 
                 try {
-                    // Detect if running locally or on GitHub Pages
+                    // Detect if running locally or on production
                     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
                     
-                    // Render Backend URL
+                    // Production Backend URL (can be overridden by an environment-like check if needed)
                     const prodUrl = 'https://oyins-girlies.onrender.com'; 
                     
                     const API_URL = isLocal ? 'http://localhost:1000/api/orders' : `${prodUrl}/api/orders`;
 
-                    console.log('Sending order to:', API_URL);
+                    console.log('Attempting to send order to:', API_URL);
+                    
                     const response = await fetch(API_URL, {
                         method: 'POST',
                         headers: {
@@ -100,16 +107,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     const result = await response.json();
 
-                    if (response.ok) {
-                        alert(`Order Confirmed and Saved to Database!\nOrder ID: ${result.order.id}\nThank you for shopping with Oyin's Girlies!`);
+                    if (response.ok && result.success) {
+                        alert(`Order Confirmed!\nOrder ID: ${result.order.id}\nThank you for shopping with Oyin's Girlies!`);
                         window.location.href = 'index.html';
                     } else {
-                        throw new Error(result.error || 'Failed to save order');
+                        throw new Error(result.error || 'The server encountered an error while saving your order.');
                     }
                 } catch (error) {
-                    console.error('Error:', error);
-                    alert(`Error: ${error.message}\n\nPlease make sure your backend server is running on port 1000.\n(Run 'node server.js' in your terminal)`);
-                    submitBtn.innerText = 'Confirm Order';
+                    console.error('Order Submission Error:', error);
+                    let errorMessage = error.message;
+                    if (error instanceof TypeError && error.message.includes('fetch')) {
+                        errorMessage = 'Unable to connect to the server. Please check your internet connection or try again later.';
+                    }
+                    alert(`Error: ${errorMessage}`);
+                    submitBtn.innerText = originalBtnText;
                     submitBtn.disabled = false;
                 }
             });
