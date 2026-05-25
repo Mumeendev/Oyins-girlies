@@ -21,12 +21,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const catCards = document.querySelectorAll('.cat-card');
     catCards.forEach(card => {
         card.addEventListener('click', function() {
-            const category = this.getAttribute('data-category');
-            // Creative ripple effect or feedback
+            // Visual feedback
             this.style.transform = 'scale(0.98)';
             setTimeout(() => {
                 this.style.transform = '';
-                alert(`Exploring the ${category} collection... Coming soon!`);
             }, 100);
         });
     });
@@ -80,11 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Detect if running locally or on GitHub Pages
                     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
                     
-                    // STEP 1: Host your server on Render.com
-                    // STEP 2: Replace the URL below with your actual Render URL
+                    // Render Backend URL
                     const prodUrl = 'https://oyins-girlies.onrender.com'; 
                     
-                    const API_URL = isLocal ? 'http://localhost:3000/api/orders' : `${prodUrl}/api/orders`;
+                    const API_URL = isLocal ? 'http://localhost:1000/api/orders' : `${prodUrl}/api/orders`;
 
                     console.log('Sending order to:', API_URL);
                     const response = await fetch(API_URL, {

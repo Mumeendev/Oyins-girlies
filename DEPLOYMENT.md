@@ -8,7 +8,7 @@ GitHub Pages cannot run your `server.js`. You need a backend host (like **Render
 1.  **Create a New Web Service** on [Render.com](https://render.com).
 2.  **Connect your GitHub Repo.**
 3.  **Set Environment Variables:**
-    *   `DATABASE_URL`: `postgresql://neondb_owner:npg_FLxWvsNSuR21@ep-jolly-truth-aqf5zn1v-pooler.c-8.us-east-1.aws.neon.tech/neondb?sslmode=require`
+    *   `DATABASE_URL`: *Your Neon Connection String (find it in Neon dashboard)*
     *   `PORT`: `10000`
 4.  **Build Command:** `npm install`
 5.  **Start Command:** `node server.js`

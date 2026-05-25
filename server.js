@@ -5,16 +5,29 @@ const cors = require('cors');
 const nodemailer = require('nodemailer');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 1000;
+
+// Validate Environment Variables
+const requiredEnv = ['DATABASE_URL', 'EMAIL_USER', 'EMAIL_PASS', 'NOTIFY_EMAILS'];
+requiredEnv.forEach(env => {
+  if (!process.env[env]) {
+    console.warn(`WARNING: ${env} is not defined. Some features may not work.`);
+  }
+});
 
 // Email Transporter Setup
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+let transporter;
+if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+  transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+} else {
+  console.warn('Transporter not initialized: EMAIL_USER or EMAIL_PASS missing.');
+}
 
 // Middleware
 app.use(cors({
@@ -54,6 +67,10 @@ initDb();
 
 // Function to send email notification
 const sendOrderEmail = async (order) => {
+  if (!transporter) {
+    console.warn('Email notification skipped: Transporter not initialized.');
+    return;
+  }
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: process.env.NOTIFY_EMAILS,
@@ -84,6 +101,14 @@ const sendOrderEmail = async (order) => {
 };
 
 // Routes
+app.get('/', (req, res) => {
+  res.send('Oyin\'s Girlies Backend is running!');
+});
+
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK', message: 'Server is healthy' });
+});
+
 app.post('/api/orders', async (req, res) => {
   const { product, location, colour, amount, date } = req.body;
 
