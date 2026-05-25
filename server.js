@@ -76,6 +76,8 @@ const initDb = async () => {
   const queryText = `
     CREATE TABLE IF NOT EXISTS orders (
       id SERIAL PRIMARY KEY,
+      customer_name TEXT,
+      customer_phone TEXT,
       product_name TEXT NOT NULL,
       location TEXT NOT NULL,
       colour TEXT NOT NULL,
@@ -87,6 +89,20 @@ const initDb = async () => {
   try {
     const client = await pool.connect();
     await client.query(queryText);
+    
+    // Check if columns exist (for backward compatibility)
+    await client.query(`
+      DO $$ 
+      BEGIN 
+        IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='orders' AND column_name='customer_name') THEN
+          ALTER TABLE orders ADD COLUMN customer_name TEXT;
+        END IF;
+        IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='orders' AND column_name='customer_phone') THEN
+          ALTER TABLE orders ADD COLUMN customer_phone TEXT;
+        END IF;
+      END $$;
+    `);
+
     client.release();
     console.log('Database table "orders" is ready.');
   } catch (err) {
@@ -107,20 +123,24 @@ const sendOrderEmail = async (order) => {
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: notifyEmails,
-    subject: `New Order Received: ${order.product_name}`,
+    subject: `New Order Received: ${order.product_name} from ${order.customer_name || 'Customer'}`,
     html: `
-      <div style="font-family: Arial, sans-serif; border: 1px solid #ff007f; padding: 20px; border-radius: 10px;">
-        <h2 style="color: #ff007f;">New Order Notification</h2>
+      <div style="font-family: Arial, sans-serif; border: 1px solid #ff007f; padding: 20px; border-radius: 10px; max-width: 600px; margin: auto;">
+        <h2 style="color: #ff007f; text-align: center;">New Order Notification</h2>
         <p>A new order has been placed on <strong>Oyin's Girlies Boutique</strong>.</p>
-        <hr>
-        <p><strong>Order ID:</strong> #${order.id}</p>
-        <p><strong>Product:</strong> ${order.product_name}</p>
-        <p><strong>Colour/Shade:</strong> ${order.colour}</p>
-        <p><strong>Quantity:</strong> ${order.amount}</p>
-        <p><strong>Delivery Location:</strong> ${order.location}</p>
-        <p><strong>Preferred Delivery Date:</strong> ${new Date(order.delivery_date).toLocaleDateString()}</p>
-        <hr>
-        <p style="font-size: 0.8rem; color: #666;">This is an automated notification from your website.</p>
+        <hr style="border: 0; border-top: 1px solid #eee;">
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr><td style="padding: 8px 0; color: #666;"><strong>Order ID:</strong></td><td style="padding: 8px 0;">#${order.id}</td></tr>
+          <tr><td style="padding: 8px 0; color: #666;"><strong>Customer Name:</strong></td><td style="padding: 8px 0;">${order.customer_name || 'N/A'}</td></tr>
+          <tr><td style="padding: 8px 0; color: #666;"><strong>Phone Number:</strong></td><td style="padding: 8px 0;">${order.customer_phone || 'N/A'}</td></tr>
+          <tr><td style="padding: 8px 0; color: #666;"><strong>Product:</strong></td><td style="padding: 8px 0;">${order.product_name}</td></tr>
+          <tr><td style="padding: 8px 0; color: #666;"><strong>Colour/Shade:</strong></td><td style="padding: 8px 0;">${order.colour}</td></tr>
+          <tr><td style="padding: 8px 0; color: #666;"><strong>Quantity:</strong></td><td style="padding: 8px 0;">${order.amount}</td></tr>
+          <tr><td style="padding: 8px 0; color: #666;"><strong>Delivery Location:</strong></td><td style="padding: 8px 0;">${order.location}</td></tr>
+          <tr><td style="padding: 8px 0; color: #666;"><strong>Delivery Date:</strong></td><td style="padding: 8px 0;">${new Date(order.delivery_date).toLocaleDateString()}</td></tr>
+        </table>
+        <hr style="border: 0; border-top: 1px solid #eee;">
+        <p style="font-size: 0.8rem; color: #999; text-align: center;">This is an automated notification from your website system.</p>
       </div>
     `,
   };
@@ -139,10 +159,10 @@ app.get('/health', (req, res) => {
 });
 
 app.post('/api/orders', async (req, res) => {
-  let { product, location, colour, amount, date } = req.body;
+  let { product, fullName, phone, location, colour, amount, date } = req.body;
 
   // Stricter Validation
-  if (!product || !location || !colour || !amount || !date) {
+  if (!product || !fullName || !phone || !location || !colour || !amount || !date) {
     return res.status(400).json({ error: 'All fields are required' });
   }
 
@@ -151,8 +171,8 @@ app.post('/api/orders', async (req, res) => {
     return res.status(400).json({ error: 'Quantity must be a positive number' });
   }
 
-  const queryText = 'INSERT INTO orders(product_name, location, colour, amount, delivery_date) VALUES($1, $2, $3, $4, $5) RETURNING *';
-  const values = [product, location, colour, amount, date];
+  const queryText = 'INSERT INTO orders(customer_name, customer_phone, product_name, location, colour, amount, delivery_date) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *';
+  const values = [fullName, phone, product, location, colour, amount, date];
 
   try {
     const result = await pool.query(queryText, values);

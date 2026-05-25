@@ -65,12 +65,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (orderForm) {
             orderForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
+                const fullName = document.getElementById('fullName').value.trim();
+                const phone = document.getElementById('phone').value.trim();
                 const location = document.getElementById('location').value.trim();
                 const colour = document.getElementById('colour').value;
                 const amount = document.getElementById('amount').value;
                 const date = document.getElementById('deliveryDate').value;
 
-                if (!location || !colour || !amount || !date) {
+                if (!fullName || !phone || !location || !colour || !amount || !date) {
                     alert('Please fill in all fields correctly.');
                     return;
                 }
@@ -98,6 +100,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         },
                         body: JSON.stringify({
                             product,
+                            fullName,
+                            phone,
                             location,
                             colour,
                             amount,
