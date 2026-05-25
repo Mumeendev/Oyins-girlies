@@ -77,11 +77,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 submitBtn.disabled = true;
 
                 try {
-                    // Detect if running locally or in production
+                    // Detect if running locally or on GitHub Pages
                     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-                    const prodUrl = 'https://your-app-name.onrender.com'; // Placeholder
+                    
+                    // STEP 1: Host your server on Render.com
+                    // STEP 2: Replace the URL below with your actual Render URL
+                    const prodUrl = 'https://oyins-girlies.onrender.com'; 
+                    
                     const API_URL = isLocal ? 'http://localhost:3000/api/orders' : `${prodUrl}/api/orders`;
 
+                    console.log('Sending order to:', API_URL);
                     const response = await fetch(API_URL, {
                         method: 'POST',
                         headers: {
